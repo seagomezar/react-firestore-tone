@@ -29,6 +29,7 @@ class App extends Component {
     this.playSong = this.playSong.bind(this);
     this.saveSong = this.saveSong.bind(this);
     this.convertArrayInObject = this.convertArrayInObject.bind(this);
+    this.Clear = this.Clear.bind(this);
   }
   componentDidMount() {
 
@@ -75,6 +76,12 @@ class App extends Component {
     }, {})
   }
 
+  Clear() {
+    Tone.Transport.stop();
+		Tone.Transport.cancel();
+		Tone.Transport.clear();
+  }
+
   saveSong() {
     console.log("no in");
     if(this.state.song) {
@@ -98,6 +105,7 @@ class App extends Component {
         {(this.state.allNotes) ? <Piano notes={this.state.allNotes} /> : 'Loading Piano'}
         <button onClick={this.handleGenerate}>Generate Song</button>
         <button onClick={this.saveSong}>Save Song</button>
+        <button onClick={this.Clear}>Clear</button>
       </div>
     );
   }
