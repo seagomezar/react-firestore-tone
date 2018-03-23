@@ -19,6 +19,9 @@ class App extends Component {
     this.databaseRef.get().then((doc) => {
       if (doc.exists) {
         console.log("Document data:", doc.data().notes);
+        this.setState({
+          allNotes: doc.data().notes
+        }, this.paintPiano)
       } else {
         console.log("No such document!");
       }
@@ -29,10 +32,12 @@ class App extends Component {
   }
 
   paintPiano() {
+
+    const alteredNotesLength = ((String(this.state.allNotes).match(new RegExp("#", "g")) || []).length);
     
     const piano = document.getElementById("piano");
 
-    const widthPerNote = window.innerWidth / (this.state.allNotes.length - 25);
+    const widthPerNote = (window.innerWidth - 20) / (this.state.allNotes.length - alteredNotesLength);
     const heightPerNote = 120;
 
     const blackNotesWidthPortion = 2;
