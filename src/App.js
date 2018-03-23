@@ -3,6 +3,7 @@ import './App.css';
 import Tone from 'tone';
 import database from './firebase';
 import Piano from './Piano';
+import { generateMusicAndTempo } from './Generator';
 
 class App extends Component {
 
@@ -13,6 +14,7 @@ class App extends Component {
     };
 
     this.databaseRef = database.collection("notes").doc("Re0fdrkQs2J1VdRmesgV");
+    this.handleGenerate = this.handleGenerate.bind(this);
 
   }
   componentDidMount() {
@@ -29,6 +31,10 @@ class App extends Component {
       console.log("Error getting document:", error);
     });
 
+  }
+
+  handleGenerate() {
+    console.log("song", generateMusicAndTempo(10));
   }
 
   render() {

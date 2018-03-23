@@ -24,7 +24,7 @@ class Piano extends Component {
         };
         const piano = <ul id="piano">
             {allNotes.map((note) => {
-                return (~note.indexOf("#")) ? <li id="note" className="black" style={blackStyle}></li> : <li id="note" className="white" style={whiteStyle}></li>
+                return (~note.indexOf("#")) ? <li id={note} className="black" style={blackStyle} key={note}></li> : <li id={note} className="white" style={whiteStyle} key={note}></li>
             })}
         </ul>;
 
