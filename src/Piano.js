@@ -10,7 +10,7 @@ class Piano extends Component {
 
     painPiano(allNotes) {
         const alteredNotesLength = ((String(allNotes).match(new RegExp("#", "g")) || []).length);
-        const widthPerNote = (window.innerWidth - 25) / (allNotes.length - alteredNotesLength);
+        const widthPerNote = (window.innerWidth - 100) / (allNotes.length - alteredNotesLength);
         const heightPerNote = 120;
         const blackNotesWidthPortion = 2;
         const blackNotesHeightPortion = 1.6;
@@ -23,9 +23,11 @@ class Piano extends Component {
             height : heightPerNote + "px"
         };
         const piano = <ul id="piano">
-            {allNotes.map((note) => {
-                return (~note.indexOf("#")) ? <li id={note} className="black" style={blackStyle} key={note}></li> : <li id={note} className="white" style={whiteStyle} key={note}></li>
-            })}
+            {
+                allNotes.map((note) => {
+                    return (~note.indexOf("#")) ? <li id={note} className="black" style={blackStyle} key={note}></li> : <li id={note} className="white" style={whiteStyle} key={note}></li>
+                })
+            }
         </ul>;
 
         return piano;
