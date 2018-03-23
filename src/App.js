@@ -14,7 +14,8 @@ class App extends Component {
     super();
 
     this.state = {
-      allNotes: null
+      allNotes: null,
+      song: null
     };
 
     this.synth = new Tone.Sampler(SALAMANDER_PIANO_SOUNDS, {
@@ -26,7 +27,8 @@ class App extends Component {
 
     this.handleGenerate = this.handleGenerate.bind(this);
     this.playSong = this.playSong.bind(this);
-
+    this.saveSong = this.saveSong.bind(this);
+    this.convertArrayInObject = this.convertArrayInObject.bind(this);
   }
   componentDidMount() {
 
@@ -61,8 +63,33 @@ class App extends Component {
 
   handleGenerate() {
     const song = generateMusicAndTempo(10);
-    console.log(song);
+    this.setState({song: song});
+
     this.playSong(song, 500);
+  }
+
+  convertArrayInObject(arr) {
+    return arr.reduce(function(acc, cur, i) {
+      acc[i] = cur;
+      return acc;
+    }, {})
+  }
+
+  saveSong() {
+    console.log("no in");
+    if(this.state.song) {
+      console.log("in");
+      this.databaseRef.collection("songs").add({
+        song: this.convertArrayInObject(this.state.song),
+        date: Date.now() })
+    .then(function(docRef) {
+        console.log("Document written with ID: ", docRef.id);
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+    }
+
   }
 
   render() {
@@ -70,6 +97,7 @@ class App extends Component {
       <div>
         {(this.state.allNotes) ? <Piano notes={this.state.allNotes} /> : 'Loading Piano'}
         <button onClick={this.handleGenerate}>Generate Song</button>
+        <button onClick={this.saveSong}>Save Song</button>
       </div>
     );
   }
